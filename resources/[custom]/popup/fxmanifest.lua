@@ -1,28 +1,14 @@
-fx_version 'cerulean'
-game 'gta5'
+fx_version "cerulean"
+game "gta5"
+lua54 "yes"
 
 name "popup"
 description "Simple pop up menu using react"
 author "Benjamin4k"
 version "1.0.0"
 
-shared_scripts {
-	'shared/*.lua'
-}
+client_scripts {"client/*.lua"}
 
-client_scripts {
-	'client/*.lua'
-}
+ui_page "gui/dist/index.html"
 
-server_scripts {
-	'server/*.lua'
-}
-
-ui_page 'gui/index.html'
-
-files {
-    'gui/index.html',
-    'gui/assets/*.css',
-    'gui/assets/*.js',
-    'gui/assets/*.svg',
-}
+files {"gui/dist/index.html", "gui/dist/assets/*.css", "gui/dist/assets/*.js", "gui/dist/assets/*.svg"}

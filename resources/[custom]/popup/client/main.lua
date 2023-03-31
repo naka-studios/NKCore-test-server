@@ -1,41 +1,38 @@
-local function SendReactMessage(action, data)
-  SendNUIMessage({
-    action = action,
-    data = data
-  })
+local commandName = "popup" --[[ string ]]
+
+---Handle the command
+---@param source number
+---@param args array
+---@param rawCommand string
+---@return void
+local commandHandler = function(source, args, rawCommand)
+  if not args then
+    print("Usage: /" .. commandName .. " [mode]")
+    return
+  end
+
+  if #args < 1 then
+    print("Usage: /" .. commandName .. " [mode]")
+    return
+  end
+
+  local mode --[[ boolean ]]
+  local data = {} --[[ object ]]
+  local arg<const> = args[1] --[[ string ]]
+
+  if arg == "true" then
+    mode = true
+    data = {
+      title = "Belajar react js di FiveM"
+    }
+  elseif arg == "false" then
+    mode = false
+  else
+    print("Mode must be a true or false")
+    return
+  end
+
+  toggleNuiFrame(mode, data)
 end
 
-local function toggleNuiFrame(shouldShow, data)
-  local data = data or ""
-  local shouldShow = shouldShow or false
-  local action = shouldShow and 'show' or 'hide'
-
-  SetNuiFocus(shouldShow, shouldShow)
-  SendReactMessage(action, data)
-end
-
-RegisterCommand('show-nui', function()
-  local data = {
-    title = 'Belajar react js di FiveM',
-  }
-
-  toggleNuiFrame(true, data)
-  print('Show NUI frame')
-end)
-
-RegisterCommand('close-nui', function()
-  toggleNuiFrame(false)
-  print('Close NUI frame')
-end)
-
-RegisterNUICallback('getCountData', function(data, cb)
-  local data = data or {}
-
-  print('Data sent by React ' .. json.encode(data))
-
-  local count = data.count
-
-  print('Count is ' .. count)
-
-  cb({})
-end)
+RegisterCommand(commandName, commandHandler)
