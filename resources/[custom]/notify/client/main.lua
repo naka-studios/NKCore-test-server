@@ -1,4 +1,25 @@
-local function SendAlert(type, duration, message)
+local commandName = "alert" --[[ string ]]
+
+---Handle the command
+---@param source number
+---@param args array
+---@param rawCommand string
+---@return void
+local commandHandler = function(source --[[ number ]] , args --[[ array ]] , rawCommand --[[ string ]] )
+  if not args then
+    print("Usage: /" .. commandName .. " [type] [duration] [message]")
+    return
+  end
+
+  if #args < 3 then
+    print("Usage: /" .. commandName .. " [type] [duration] [message]")
+    return
+  end
+
+  local type<const> = args[1]
+  local duration<const> = tonumber(args[2])
+  local message<const> = table.concat(args, " ", 3)
+
   SendNUIMessage({
     type = type,
     text = message,
@@ -6,10 +27,4 @@ local function SendAlert(type, duration, message)
   })
 end
 
-RegisterCommand('alert', function(source, args, rawCommand)
-  local type = args[1] or 'success'
-  local duration = args[2] or 5000
-  local message = args[3] or 'Ini adalah pesan sukses'
-
-  SendAlert(type, duration, message)
-end)
+RegisterCommand(commandName, commandHandler)
