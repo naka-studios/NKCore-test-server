@@ -1,12 +1,15 @@
-RegisterCommand("anticheat", function (source, args, rawCommand)
-    local routingBucket = tonumber(args[1])
-    local mode = args[2]
+local commandName = "anticheat" --[[ string ]]
 
-    SetRoutingBucketEntityLockdownMode(routingBucket, mode)
-end)
+---Set the entity lockdown mode for a routing bucket.
+---@param source number
+---@param args string[]
+---@param rawCommand string
+---@return void
+local commandHandler = function(source --[[ number ]] , args --[[ array ]] , rawCommand --[[ string ]] )
+  local routingBucket = tonumber(args[1])
+  local mode = args[2]
 
-AddEventHandler("playerConnecting", function(_, _, deferrals)
-    local player = source
+  SetRoutingBucketEntityLockdownMode(routingBucket, mode)
+end
 
-    print("playerConnecting: " .. player)
-end)
+RegisterCommand(commandName, commandHandler)
